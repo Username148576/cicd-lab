@@ -15,6 +15,3 @@ async function start() {
 }
 
 void start();
-
-// test wrong situation
-const a: number = 'string';
