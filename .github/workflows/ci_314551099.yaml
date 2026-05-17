@@ -1,0 +1,43 @@
+name: CI_314551099
+
+on:
+  push:
+
+jobs:
+  ci:
+    name: TypeCheck / Format / Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: "npm"
+
+      # ── 1. TypeScript typecheck ────────────────────────────────────────
+      - name: Install dependencies
+        run: npm ci
+
+      - name: TypeScript typecheck
+        run: npm run typecheck
+
+      # ── 2. Prettier check ─────────────────────────────────────────────
+      - name: Prettier check
+        run: npm run format:check
+
+      # ── 3. Test (with JUnit reporter for results page) ────────────────
+      - name: Run tests
+        run: npm run test -- --reporter=verbose --reporter=junit --outputFile=test-results/results.xml
+
+      # ── 4. Publish test results to GitHub Actions summary ─────────────
+      - name: Publish test results
+        uses: mikepenz/action-junit-report@v4
+        if: always() # 即使測試失敗也要顯示結果
+        with:
+          report_paths: "test-results/results.xml"
+          check_name: "Vitest Test Results"
+          fail_on_failure: true
