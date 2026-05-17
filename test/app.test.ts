@@ -3,6 +3,7 @@ import { buildApp } from '../src/app';
 
 describe('Fastify app', () => {
   it('GET /health returns ok status', async () => {
+    const x: number = "string";
     const app = buildApp({ logger: false });
     const response = await app.inject({
       method: 'GET',
@@ -26,4 +27,3 @@ describe('Fastify app', () => {
     await app.close();
   });
 });
- 
