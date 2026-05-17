@@ -16,7 +16,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: "npm"
+          cache: 'npm'
 
       # ── 1. TypeScript typecheck ────────────────────────────────────────
       - name: Install dependencies
@@ -38,6 +38,6 @@ jobs:
         uses: mikepenz/action-junit-report@v4
         if: always() # 即使測試失敗也要顯示結果
         with:
-          report_paths: "test-results/results.xml"
-          check_name: "Vitest Test Results"
+          report_paths: 'test-results/results.xml'
+          check_name: 'Vitest Test Results'
           fail_on_failure: true
